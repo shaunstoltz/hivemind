@@ -210,8 +210,8 @@ def main():
 
     model = get_model(training_args, config, tokenizer)
     model.to(training_args.device)
-
-    tokenized_datasets = load_from_disk(Path(dataset_args.dataset_path))
+    print(dataset_args.dataset_path)
+    tokenized_datasets = load_from_disk(Path(str(dataset_args.dataset_path)))
     # This data collator will take care of randomly masking the tokens.
     data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer)
 

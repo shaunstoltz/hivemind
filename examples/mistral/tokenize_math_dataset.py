@@ -182,19 +182,19 @@ def create_prompt_formats(sample):
 
     return sample
 
-file_path = "./data/model_training/train.json"
-file_path_out = "./data/model_training/train_llama.json"
+#file_path = "./data/model_training/train.json"
+#file_path_out = "./data/model_training/train_llama.json"
 
-arr = []
-with open(file_path, 'r') as f:
-    data = json.load(f)
-    for d in data:
-        formated_instruction = create_prompt_formats(d)
-        arr.append(formated_instruction)
+#arr = []
+#with open(file_path, 'r') as f:
+#    data = json.load(f)
+#    for d in data:
+#        formated_instruction = create_prompt_formats(d)
+#        arr.append(formated_instruction)
 
 
-with open(file_path_out, 'w') as f:
-    json.dump(arr, f, indent=1)
+#with open(file_path_out, 'w') as f:
+#    json.dump(arr, f, indent=1)
 
 
 
@@ -222,8 +222,8 @@ import nltk
 from datasets import load_dataset
 from transformers import AlbertTokenizerFast
 
-COLUMN_NAMES = ("attention_mask", "input_ids", "sentence_order_label", "special_tokens_mask", "token_type_ids")
-
+#COLUMN_NAMES = ("attention_mask", "input_ids", "sentence_order_label", "special_tokens_mask", "token_type_ids")
+COLUMN_NAMES = ("attention_mask", "input_ids", "sentence_order_label", "special_tokens_mask")
 
 def create_instances_from_document(tokenizer, document, max_seq_length):
     """
@@ -298,7 +298,8 @@ def tokenize_function(tokenizer, examples):
     new_examples = {col: [] for col in COLUMN_NAMES}
 
     for text in texts:
-        instances = create_instances_from_document(tokenizer, text, max_seq_length=512)
+        instances = create_instances_from_document(tokenizer, text, max_seq_length=32768)
+        #print(instances)
         for instance in instances:
             for key, value in instance.items():
                 new_examples[key].append(value)
@@ -319,7 +320,7 @@ if __name__ == "__main__":
     tokenizer = AutoTokenizer.from_pretrained(model_name, use_auth_token=False)
     tokenizer.pad_token = tokenizer.eos_token  
 
-    wikitext = load_dataset('json', data_files="./data/model_training/train_llama.json")
+    wikitext = load_dataset('json', data_files="/home/shaunst/repo/hivemind/examples/mistral/data/model_training/train_llama.json")
 
 
     tokenized_datasets = wikitext.map(
