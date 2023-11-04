@@ -240,7 +240,7 @@ def main():
 
     tokenized_datasets = load_from_disk(Path(dataset_args.dataset_path))
     # This data collator will take care of randomly masking the tokens.
-    data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer)
+    data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
 
     validators, local_public_key = utils.make_validators(collaboration_args.run_id)
 
