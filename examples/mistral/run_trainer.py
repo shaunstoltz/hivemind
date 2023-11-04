@@ -345,7 +345,8 @@ def main():
             Path(training_args.output_dir).glob("checkpoint*"), default=None, key=os.path.getctime
         )
 
-        trainer.train(model_path=latest_checkpoint_dir)
+        trainer.train(model_path=latest_checkpoint_dir, mlm=False:wq
+                      )
 
 
 if __name__ == "__main__":
